@@ -2,7 +2,7 @@
 
 Name:		steam
 Version:	1.0.0.22
-Release:	3%{?dist}
+Release:	2%{?dist}
 Summary:	Installer for the Beta of the Steam software distribution service
 License:	Steam License Agreement	
 URL:		http://www.steampowered.com/
@@ -129,9 +129,6 @@ Requires:	rpm-python
 # This is not in Fedora, but I made a package for it.
 Requires:	SDL2(x86-32)
 
-# Not strictly required but provides a richer user experience
-Requires:	flash-plugin(x86-32)
-
 BuildArch:	i686
 
 %description
@@ -187,9 +184,6 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
-* Sat Feb 16 2013 Liam Campbell <lijcam@kororaproject.org> - 1.0.0.22-3
-- Added flash-plugin(x86-32) as a dependency.
-
 * Thu Feb  7 2013 Tom Callaway <spot@fedoraproject.org> - 1.0.0.22-2
 - fix steamdeps to translate deb names to rpm names
 - add Requires: xterm
