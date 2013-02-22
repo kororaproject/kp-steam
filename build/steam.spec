@@ -2,7 +2,7 @@
 
 Name:		steam
 Version:	1.0.0.22
-Release:	2%{?dist}
+Release:	2%{?dist}.1
 Summary:	Installer for the Beta of the Steam software distribution service
 License:	Steam License Agreement	
 URL:		http://www.steampowered.com/
@@ -16,6 +16,7 @@ Patch0:		steam-1.0.0.22-fedora.patch
 # Add support for Fedora to steamdeps
 Patch1:		steam-1.0.0.22-fedora-steamdeps.patch
 Patch2:		steam-1.0.0.22-fedora-rpmnames.patch
+Patch3:		steam-1.0.0.22-korora-steamdeps.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	dos2unix
@@ -143,6 +144,7 @@ ar p %{SOURCE0} data.tar.gz | tar xzf -
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 cp %{SOURCE1} %{SOURCE2} .
 dos2unix usr/share/applications/%{name}.desktop
 

@@ -1,0 +1,13 @@
+diff --git a/usr/bin/steamdeps b/usr/bin/steamdeps
+index 0571424..06c9379 100755
+--- a/usr/bin/steamdeps
++++ b/usr/bin/steamdeps
+@@ -34,7 +34,7 @@ def getDistro():
+ 	Try to identify distribution of Linux
+ 	"""
+ 	global _distro
+-	if dist()[0].lower() == 'fedora':
++	if dist()[0].lower() == 'fedora' or dist()[0].lower() == 'korora':
+ 		_distro = 'fedora'
+ 		_distro_version = dist()[1]
+ 	elif dist()[0].lower() == 'redhat':
