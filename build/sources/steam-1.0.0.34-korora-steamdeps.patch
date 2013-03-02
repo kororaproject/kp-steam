@@ -1,7 +1,6 @@
-diff --git a/usr/bin/steamdeps b/usr/bin/steamdeps
-index 0571424..06c9379 100755
---- a/usr/bin/steamdeps
-+++ b/usr/bin/steamdeps
+diff --git a/steamdeps b/steamdeps
+--- a/steamdeps
++++ b/steamdeps
 @@ -34,7 +34,7 @@ def getDistro():
  	Try to identify distribution of Linux
  	"""
