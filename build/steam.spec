@@ -1,22 +1,18 @@
 %global debug_package %{nil}
 
 Name:		steam
-Version:	1.0.0.22
-Release:	2%{?dist}.1
+Version:	1.0.0.34
+Release:	1%{?dist}.1
 Summary:	Installer for the Beta of the Steam software distribution service
 License:	Steam License Agreement	
 URL:		http://www.steampowered.com/
-Source0:	http://repo.steampowered.com/steam/archive/precise/steam_%{version}_i386.deb
-# Also taken from the deb Description field
-Source1:	STEAM-LICENSE.txt
-# Copy of email where Valve gives permission for me to distribute this package
-Source2:	Valve-Permission-To-Redistribute-Steam-in-RPM.txt
+Source0:	http://repo.steampowered.com/steam/archive/precise/steam_%{version}.tar.gz
 # Needed to clean the Unity out of the desktop file.
-Patch0:		steam-1.0.0.22-fedora.patch
+Patch0:		steam-1.0.0.34-fedora.patch
 # Add support for Fedora to steamdeps
-Patch1:		steam-1.0.0.22-fedora-steamdeps.patch
-Patch2:		steam-1.0.0.22-fedora-rpmnames.patch
-Patch3:		steam-1.0.0.22-korora-steamdeps.patch
+Patch1:		steam-1.0.0.34-fedora-steamdeps.patch
+Patch2:		steam-1.0.0.34-fedora-rpmnames.patch
+Patch3:		steam-1.0.0.34-korora-steamdeps.patch
 
 BuildRequires:	desktop-file-utils
 BuildRequires:	dos2unix
@@ -55,6 +51,7 @@ Requires:	libpng >= 1.2.13
 Requires:	pulseaudio-libs(x86-32) >= 0.99.1
 Requires:	libstdc++(x86-32) >= 4.6
 Requires:	libX11(x86-32) >= 1.4.99.1
+Requires:	libXdmcp(x86-32)
 Requires:	libXext(x86-32)
 Requires:	libXfixes(x86-32)
 Requires:	libXi(x86-32) >= 1.2.99.4
@@ -79,7 +76,11 @@ Requires:       libdrm(x86-32)
 Requires:       mesa-libEGL(x86-32)
 Requires:       expat(x86-32)
 Requires:	libffi(x86-32)
+%if 0%{?fedora} >= 19
+Requires:	flac-libs(x86-32)
+%else
 Requires:       flac(x86-32)
+%endif
 # I don't think this thing will work on Fedora < 17.
 # This is just one reason.
 %if 0%{?fedora} >= 17
@@ -123,12 +124,16 @@ Requires:	libXtst(x86-32)
 Requires:	libXxf86vm(x86-32)
 # Technically, this is "gnome-terminal" or "xterm", but I don't want to pull in gnome unnecessarily.
 Requires:	xterm
+Requires:	xz
 
 # For the patched steamdeps
 Requires:	rpm-python
 
 # This is not in Fedora, but I made a package for it.
 Requires:	SDL2(x86-32)
+
+# S3TC texture support
+Requires:	libtxc_dxtn(x86-32)
 
 BuildArch:	i686
 
@@ -139,36 +144,35 @@ installation, automatic updates, achievements, SteamCloud synchronized
 savegame and screenshot functionality, and many social features.
 
 %prep
-%setup -q -c -T -n %{name}-%{version}
-ar p %{SOURCE0} data.tar.gz | tar xzf -
+%setup -q -n %{name}
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-cp %{SOURCE1} %{SOURCE2} .
-dos2unix usr/share/applications/%{name}.desktop
+dos2unix %{name}.desktop
 
 %build
 # Nothing to build
 
 %install
-mkdir -p %{buildroot}
-cp -a usr %{buildroot}/
+# mkdir -p %{buildroot}
+# cp -a usr %{buildroot}/
+make DESTDIR=%{buildroot} install
 
 desktop-file-validate %{buildroot}/%{_datadir}/applications/steam.desktop
 
 %files
-%doc STEAM-LICENSE.txt Valve-Permission-To-Redistribute-Steam-in-RPM.txt
+%doc COPYING README steam_install_agreement.txt
 %{_bindir}/steam
 %{_bindir}/steamdeps
 %{_libdir}/steam/
 %{_datadir}/pixmaps/steam.png
+%{_datadir}/pixmaps/steam_tray.png
 %{_datadir}/applications/steam.desktop
 %{_datadir}/icons/hicolor/*/apps/steam.png
 %{_defaultdocdir}/steam/
 %{_mandir}/man6/steam.*
 # %%ghost %attr(0755,root,root) %{_libdir}/libjpeg.so.8
-
 %post
 if [ ! -f /usr/lib/libjpeg.so.8 ]; then
   # Ubuntu has a different soname for this library.
@@ -186,6 +190,9 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+* Thu Feb 28 2013 Tom Callaway <spot@fedoraproject.org> - 1.0.0.22-3
+- fix xz name mapping, add as a dependency (thanks to Bob Arendt)
+
 * Thu Feb  7 2013 Tom Callaway <spot@fedoraproject.org> - 1.0.0.22-2
 - fix steamdeps to translate deb names to rpm names
 - add Requires: xterm

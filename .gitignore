@@ -5,3 +5,4 @@ build/sources/steam-*-fedora-rpmnames.patch
 build/sources/steam-*-fedora-steamdeps.patch
 build/sources/steam-*-fedora.patch
 build/sources/steam_*_i386.deb
+build/sources/steam_*tar.gz
