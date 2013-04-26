@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:		steam
-Version:	1.0.0.34
+Version:	1.0.0.36
 Release:	1%{?dist}.1
 Summary:	Installer for the Beta of the Steam software distribution service
 License:	Steam License Agreement	
@@ -167,7 +167,7 @@ desktop-file-validate %{buildroot}/%{_datadir}/applications/steam.desktop
 %{_bindir}/steamdeps
 %{_libdir}/steam/
 %{_datadir}/pixmaps/steam.png
-%{_datadir}/pixmaps/steam_tray.png
+%{_datadir}/pixmaps/steam_tray_mono.png
 %{_datadir}/applications/steam.desktop
 %{_datadir}/icons/hicolor/*/apps/steam.png
 %{_defaultdocdir}/steam/
