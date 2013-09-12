@@ -1,7 +1,7 @@
 %global debug_package %{nil}
 
 Name:		steam
-Version:	1.0.0.36
+Version:	1.0.0.39
 Release:	1%{?dist}.1
 Summary:	Installer for the Beta of the Steam software distribution service
 License:	Steam License Agreement	
@@ -125,6 +125,7 @@ Requires:	libXxf86vm(x86-32)
 # Technically, this is "gnome-terminal" or "xterm", but I don't want to pull in gnome unnecessarily.
 Requires:	xterm
 Requires:	xz
+Requires:	zenity
 
 # For the patched steamdeps
 Requires:	rpm-python
@@ -190,6 +191,10 @@ fi
 /usr/bin/gtk-update-icon-cache %{_datadir}/icons/hicolor &>/dev/null || :
 
 %changelog
+* Mon Jul  1 2013 Tom Callaway <spot@fedoraproject.org> - 1.0.0.39-1
+- update to 1.0.0.39
+- add Requires: zenity
+
 * Thu Feb 28 2013 Tom Callaway <spot@fedoraproject.org> - 1.0.0.22-3
 - fix xz name mapping, add as a dependency (thanks to Bob Arendt)
 
