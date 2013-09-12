@@ -1,4 +1,4 @@
-build/sources/steam-*.fc18.src.rpm
+build/sources/steam-*.fc*.src.rpm
 build/sources/STEAM-LICENSE.txt
 build/sources/Valve-Permission-To-Redistribute-Steam-in-RPM.txt
 build/sources/steam-*-fedora-rpmnames.patch
